@@ -49,4 +49,13 @@ module('Integration | Helper | date-format', function(hooks) {
     await render(hbs`{{date-format}}`);
     assert.equal(this.element.textContent, '');
   });
+
+  test('a timeZone option can be passed', async function(assert) {
+    this.date = new Date('1995-12-17T12:45');
+    this.timeZone = 'Antarctica/Troll'
+
+    await render(hbs`{{date-format this.date "yyyy-MM-dd h:mm aaaa" timeZone=this.timeZone}}`);
+
+    assert.equal(this.element.textContent, '1995-12-17 8:45 p.m.');
+  });
 });
