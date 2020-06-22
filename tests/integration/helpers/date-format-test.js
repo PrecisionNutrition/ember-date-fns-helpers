@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { utcToZonedTime } from 'date-fns-tz';
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 module('Integration | Helper | date-format', function(hooks) {
   setupRenderingTest(hooks);
@@ -51,23 +51,48 @@ module('Integration | Helper | date-format', function(hooks) {
     assert.equal(this.element.textContent, '');
   });
 
-  test('a timezone arg can be used to format a date in one tz into another tz', async function(assert) {
+  test('a timeZone arg can be used to format a date in one tz into another tz', async function(assert) {
     this.today = new Date('1995-12-17T00:00:00Z');
+    this.testFormat = 'yyyy-MM-dd h:mm aaaa'
     this.targetTimeZone = null;
 
-    await render(hbs`{{date-format this.today "yyyy-MM-dd h:mm aaaa" timeZone=this.targetTimeZone}}`);
-    assert.equal(this.element.textContent, '1995-12-16 4:00 p.m.');
-
-    this.set('targetTimeZone', 'Antarctica/Troll');
-    assert.equal(this.element.textContent, '1995-12-17 12:00 a.m.');
-
-    this.set('targetTimeZone', 'America/Los_Angeles');
-    assert.equal(this.element.textContent, '1995-12-16 4:00 p.m.');
+    await render(hbs`{{date-format this.today this.testFormat timeZone=this.targetTimeZone}}`);
+    assert.equal(
+      this.element.textContent,
+      format(
+        this.today,
+        this.testFormat,
+        { timeZone: this.targetTimeZone }
+      ),
+      'formatted with a null timeZone (format will be in local time)'
+    );
 
     this.set('targetTimeZone', 'America/Toronto');
-    assert.equal(this.element.textContent, '1995-12-16 7:00 p.m.');
+    assert.equal(
+      this.element.textContent,
+      format(
+        utcToZonedTime(
+          this.today,
+          this.targetTimeZone
+        ),
+        this.testFormat,
+        { timeZone: this.targetTimeZone }
+      ),
+      'formatted with Toronto timeZone'
+    );
 
     this.set('targetTimeZone', 'Australia/Sydney');
-    assert.equal(this.element.textContent, '1995-12-17 11:00 a.m.');
+    assert.equal(
+      this.element.textContent,
+      format(
+        utcToZonedTime(
+          this.today,
+          this.targetTimeZone
+        ),
+        this.testFormat,
+        { timeZone: this.targetTimeZone }
+      ),
+      'formatted with Sydney timeZone'
+    );
   });
 });
