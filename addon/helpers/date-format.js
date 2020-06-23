@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, utcToZonedTime } from 'date-fns-tz';
 import { helper } from '@ember/component/helper';
 import normalizeDate from '../utils/normalize-date';
 import config from 'ember-get-config';
@@ -21,6 +21,10 @@ export default helper(function dateFormat(
 
   let normalizedDate = normalizeDate(date, inputFormat);
   let outFormat = outputFormat || config.date.outputFormat;
+
+  if (options.timeZone) {
+    normalizedDate = utcToZonedTime(normalizedDate, options.timeZone);
+  }
 
   return format(normalizedDate, outFormat, options);
 });
