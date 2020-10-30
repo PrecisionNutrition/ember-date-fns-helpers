@@ -1,0 +1,7 @@
+<time datetime={{date-format @value "yyyy-MM-dd'T'HH:mm:ss.SSS"}} ...attributes>
+  {{#if (has-block)}}
+    {{yield}}
+  {{else}}
+    {{date-format @value "MMM d, yyyy"}}
+  {{/if}}
+</time>
