@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | time', function(hooks) {
+module('Integration | Component | time', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders a time tag', async function(assert) {
+  test('it renders a time tag', async function (assert) {
     this.set('value', new Date(2020, 4, 13, 2, 30, 30));
 
     await render(hbs`<Time @value={{this.value}} class="some-class" />`);
@@ -19,7 +19,7 @@ module('Integration | Component | time', function(hooks) {
       .hasClass('some-class');
   });
 
-  test('yields the inner html', async function(assert) {
+  test('yields the inner html', async function (assert) {
     this.set('value', new Date(2020, 8, 28, 14, 0, 45));
 
     await render(hbs`

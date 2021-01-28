@@ -11,10 +11,7 @@ import config from 'ember-get-config';
   @param {Object} options object with options
   @return {String} formatted date string
 */
-export default helper(function dateFormat(
-  [date, outputFormat, inputFormat],
-  options = {}
-) {
+export default helper(function dateFormat([date, outputFormat, inputFormat], options = {}) {
   if (!date) {
     return;
   }
