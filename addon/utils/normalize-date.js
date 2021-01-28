@@ -5,7 +5,5 @@ export default function normalizeDate(date, inputFormat) {
     return date;
   }
 
-  return inputFormat
-    ? parse(date, inputFormat, new Date())
-    : new Date(date);
+  return inputFormat ? parse(date, inputFormat, new Date()) : new Date(date);
 }

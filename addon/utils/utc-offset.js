@@ -20,5 +20,5 @@ export default function utcOffset(ianaTimezone) {
 
   const offsetBetweenLocalAndTz = differenceInMinutes(nowInUtc, nowInTz);
 
-  return (localOffsetInMinutes + offsetBetweenLocalAndTz);
+  return localOffsetInMinutes + offsetBetweenLocalAndTz;
 }

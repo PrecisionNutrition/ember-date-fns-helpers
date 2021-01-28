@@ -1,8 +1,8 @@
 import utcOffset from 'dummy/utils/utc-offset';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | utc-offset', function() {
-  test('it works', function(assert) {
+module('Unit | Utility | utc-offset', function () {
+  test('it works', function (assert) {
     const utc0 = 'Europe/London';
     const utcPos11 = 'Pacific/Niue';
     const utcNeg4 = 'Asia/Dubai';

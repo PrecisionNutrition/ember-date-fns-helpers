@@ -4,10 +4,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Helper | is-future', function(hooks) {
+module('Integration | Helper | is-future', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it works', async function(assert) {
+  test('it works', async function (assert) {
     await render(hbs`
       {{if (is-future this.date) "yes" "no"}}
     `);
