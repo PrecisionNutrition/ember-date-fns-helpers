@@ -54,18 +54,6 @@ module('Integration | Helper | date-diff', function (hooks) {
     assert.equal(this.element.textContent.trim(), '7');
   });
 
-  test('the two given dates can be MIXED format, if a format string is OMITTED', async function (assert) {
-    // Hopefully no one in their right mind would want to do this
-    this.setProperties({
-      dateA: '2021-3-4',
-      dateB: new Date(2021, 2, 2),
-    });
-
-    await render(hbs`{{date-diff this.dateA this.dateB}}`);
-
-    assert.equal(this.element.textContent.trim(), '2');
-  });
-
   test('can return different precisions', async function (assert) {
     this.setProperties({
       dateA: new Date(),

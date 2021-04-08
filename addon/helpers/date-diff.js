@@ -6,6 +6,7 @@ import {
   differenceInSeconds,
 } from 'date-fns';
 import normalizeDate from '../utils/normalize-date';
+import { assert } from '@ember/debug';
 
 /**
   Return the difference between two given dates as a number.
@@ -19,6 +20,11 @@ import normalizeDate from '../utils/normalize-date';
 */
 export default helper(function dateDiff([dateA, dateB], { precision = 'days', inputFormat }) {
   if (!dateA || !dateB) return null;
+
+  assert(
+    '{{date-diff helper should not accept date args of mixed type',
+    typeof dateA === typeof dateB
+  );
 
   const normalizedDateA = normalizeDate(dateA, inputFormat);
   const normalizedDateB = normalizeDate(dateB, inputFormat);
