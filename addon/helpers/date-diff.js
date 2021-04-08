@@ -15,10 +15,10 @@ import normalizeDate from '../utils/normalize-date';
   @param {Date|String|Number} dateB given date
   @param {String} inputFormat string of tokens representing a date format
   @param {String} precision a unit of precision for the return value
-  @return {Number} a positive integer representing the difference
+  @return {Number|Null} a positive integer representing the difference, or null if invalid
 */
 export default helper(function dateDiff([dateA, dateB], { precision = 'days', inputFormat }) {
-  if (!dateA && !dateB) return;
+  if (!dateA || !dateB) return null;
 
   const normalizedDateA = normalizeDate(dateA, inputFormat);
   const normalizedDateB = normalizeDate(dateB, inputFormat);
