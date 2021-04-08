@@ -49,7 +49,7 @@ module('Integration | Helper | date-diff', function (hooks) {
       dateB: format(addDays(new Date(), 5), 'yyyy-MM-dd'),
     });
 
-    await render(hbs`{{date-diff this.dateA this.dateB "yyyy-MM-dd"}}`);
+    await render(hbs`{{date-diff this.dateA this.dateB inputFormat="yyyy-MM-dd"}}`);
 
     assert.equal(this.element.textContent.trim(), '7');
   });
