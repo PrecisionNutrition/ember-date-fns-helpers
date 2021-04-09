@@ -1,5 +1,6 @@
 import { helper } from '@ember/component/helper';
 import {
+  differenceInYears,
   differenceInDays,
   differenceInHours,
   differenceInMinutes,
@@ -32,6 +33,9 @@ export default helper(function dateDiff([dateA, dateB], { precision = 'days', in
   let difference;
 
   switch (precision) {
+    case 'years':
+      difference = differenceInYears(normalizedDateA, normalizedDateB);
+      break;
     case 'days':
       difference = differenceInDays(normalizedDateA, normalizedDateB);
       break;
