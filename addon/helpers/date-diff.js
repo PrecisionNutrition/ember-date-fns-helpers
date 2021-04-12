@@ -7,6 +7,8 @@ import {
   differenceInSeconds,
 } from 'date-fns';
 import normalizeDate from '../utils/normalize-date';
+import { typeOf } from '@ember/utils';
+import { deprecate } from '@ember/debug';
 
 /**
   Return the difference between two given dates as a number.
@@ -20,6 +22,18 @@ import normalizeDate from '../utils/normalize-date';
 */
 export default helper(function dateDiff([dateA, dateB], { precision = 'days', inputFormat }) {
   if (!dateA || !dateB) return null;
+
+  deprecate(
+    `{{date-diff date args should be matching type, you passed '${typeOf(dateA)}' and '${typeOf(
+      dateB
+    )}'`,
+    typeOf(dateA) === typeOf(dateB),
+    {
+      id: 'date-diff/avoid-mixed-date-types',
+      until: '1.0.0',
+      for: '@precision-nutrition/ember-date-fns-helpers',
+    }
+  );
 
   const normalizedDateA = normalizeDate(dateA, inputFormat);
   const normalizedDateB = normalizeDate(dateB, inputFormat);
