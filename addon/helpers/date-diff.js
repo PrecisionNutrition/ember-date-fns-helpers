@@ -1,12 +1,14 @@
 import { helper } from '@ember/component/helper';
 import {
+  differenceInYears,
   differenceInDays,
   differenceInHours,
   differenceInMinutes,
   differenceInSeconds,
 } from 'date-fns';
 import normalizeDate from '../utils/normalize-date';
-import { assert } from '@ember/debug';
+import { typeOf } from '@ember/utils';
+import { deprecate } from '@ember/debug';
 
 /**
   Return the difference between two given dates as a number.
@@ -21,9 +23,16 @@ import { assert } from '@ember/debug';
 export default helper(function dateDiff([dateA, dateB], { precision = 'days', inputFormat }) {
   if (!dateA || !dateB) return null;
 
-  assert(
-    '{{date-diff helper should not accept date args of mixed type',
-    typeof dateA === typeof dateB
+  deprecate(
+    `{{date-diff date args should be matching type, you passed '${typeOf(dateA)}' and '${typeOf(
+      dateB
+    )}'`,
+    typeOf(dateA) === typeOf(dateB),
+    {
+      id: 'date-diff/avoid-mixed-date-types',
+      until: '1.0.0',
+      for: '@precision-nutrition/ember-date-fns-helpers',
+    }
   );
 
   const normalizedDateA = normalizeDate(dateA, inputFormat);
@@ -32,6 +41,9 @@ export default helper(function dateDiff([dateA, dateB], { precision = 'days', in
   let difference;
 
   switch (precision) {
+    case 'years':
+      difference = differenceInYears(normalizedDateA, normalizedDateB);
+      break;
     case 'days':
       difference = differenceInDays(normalizedDateA, normalizedDateB);
       break;

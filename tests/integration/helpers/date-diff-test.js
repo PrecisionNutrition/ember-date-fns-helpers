@@ -58,7 +58,12 @@ module('Integration | Helper | date-diff', function (hooks) {
     this.setProperties({
       dateA: new Date(),
       dateB: addDays(new Date(), 1),
+      dateC: addDays(new Date(), 730),
     });
+
+    await render(hbs`{{date-diff this.dateA this.dateC precision="years"}}`);
+
+    assert.equal(this.element.textContent.trim(), '2');
 
     await render(hbs`{{date-diff this.dateA this.dateB precision="days"}}`);
 
@@ -78,7 +83,7 @@ module('Integration | Helper | date-diff', function (hooks) {
 
     await render(hbs`{{date-diff this.dateA this.dateB precision="foobars"}}`);
 
-    assert.equal(this.element.textContent.trim(), '1');
+    assert.equal(this.element.textContent.trim(), '1', 'default is in "days"');
   });
 
   test('renders nothing with no args', async function (assert) {
