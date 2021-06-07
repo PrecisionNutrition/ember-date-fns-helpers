@@ -1,6 +1,6 @@
 {
   "name": "@precision-nutrition/ember-date-fns-helpers",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "date-fns helpers",
   "keywords": [
     "ember-addon"
