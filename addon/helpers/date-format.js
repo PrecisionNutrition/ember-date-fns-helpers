@@ -1,7 +1,7 @@
+import Helper from '@ember/component/helper';
 import { format, utcToZonedTime } from 'date-fns-tz';
-import { helper } from '@ember/component/helper';
 import normalizeDate from '../utils/normalize-date';
-import config from 'ember-get-config';
+import { getOwner } from '@ember/application';
 
 /**
   Return the formatted date string in the given format.
@@ -11,17 +11,25 @@ import config from 'ember-get-config';
   @param {Object} options object with options
   @return {String} formatted date string
 */
-export default helper(function dateFormat([date, outputFormat, inputFormat], options = {}) {
-  if (!date) {
-    return;
+export default class DateFormat extends Helper {
+  get defaultOutputFormat() {
+    const config = getOwner(this).resolveRegistration('config:environment');
+
+    return config.date.outputFormat;
   }
 
-  let normalizedDate = normalizeDate(date, inputFormat);
-  let outFormat = outputFormat || config.date.outputFormat;
+  compute([date, outputFormat, inputFormat], options = {}) {
+    if (!date) {
+      return;
+    }
 
-  if (options.timeZone) {
-    normalizedDate = utcToZonedTime(normalizedDate, options.timeZone);
+    let normalizedDate = normalizeDate(date, inputFormat);
+    const outFormat = outputFormat || this.defaultOutputFormat;
+
+    if (options.timeZone) {
+      normalizedDate = utcToZonedTime(normalizedDate, options.timeZone);
+    }
+
+    return format(normalizedDate, outFormat, options);
   }
-
-  return format(normalizedDate, outFormat, options);
-});
+}
