@@ -3,14 +3,13 @@
 ## Installation
 
 - `git clone <repository-url>`
-- `cd ember-date-fns-helpers`
+- `cd @precision-nutrition/ember-date-fns-helpers`
 - `yarn install`
 
 ## Linting
 
-- `yarn lint:hbs`
-- `yarn lint:js`
-- `yarn lint:js --fix`
+- `yarn lint`
+- `yarn lint:fix`
 
 ## Running tests
 
